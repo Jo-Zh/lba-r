@@ -1,0 +1,30 @@
+body {
+  left: 0;
+  top: 0;
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #e7e7e7;
+  color: #015c92;
+}
+
+nav {
+  background-color: #018abe;
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+  margin-top: 5px;
+}
+
+.dropdown-0:hover .dropdown-menu {
+  display: none;
+}
+
+.flex-spacebetween {
+  display: flex;
+  background-color: rgb(255, 252, 246);
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 0;
+  padding: 1em;
+}
