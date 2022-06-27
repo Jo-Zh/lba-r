@@ -9,6 +9,7 @@ class User(AbstractUser):
     is_reader=models.BooleanField(default=False)
     is_poster=models.BooleanField(default=False)
     avatar=models.ImageField(upload_to='media', null=True, blank=True)
+    email=models.EmailField(max_length=254)
    
     def get_absolute_url(self):
         return reverse('userprofile', args=[self.id])
@@ -31,8 +32,8 @@ class Posts(models.Model):
     content=models.TextField(null=True, blank=True)
     # content=RichTextField(null=True, blank=True)
     cover=models.ImageField(upload_to='media', null=True, blank=True)#
-    reader=models.ManyToManyField(User)
-    creater= models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_by')
+    # reader=models.ManyToManyField(User)
+    # creater= models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_by')
     date=models.DateField(auto_now=True)
     category=models.ForeignKey(Category, on_delete=models.CASCADE)
     add_like= models.IntegerField(default=0, null=True)
@@ -46,6 +47,10 @@ class Posts(models.Model):
 
     def get_absolute_url(self):
         return reverse('home')
+
+    # def save(self, *args, **kwargs):
+    #     super().save(*args, **kwargs)
+
 
 
 class CommentManager(models.Manager):

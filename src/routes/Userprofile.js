@@ -5,6 +5,9 @@ const Userprofile = () => {
   return (
     <>
       <h1 className="box">This is User profile</h1>
+      <Link className="dropdown-item" to="/addnewpost">
+        New Post
+      </Link>
     </>
   );
 };

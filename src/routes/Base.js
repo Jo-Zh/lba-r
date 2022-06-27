@@ -2,14 +2,12 @@ import React, { useState } from "react";
 import { Outlet, Link } from "react-router-dom";
 import "./routes.css";
 
-const Base = () => {
-  const [is_authen, setIs_auten] = useState(false);
-
+const Base = (props) => {
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-dark">
         <div className="container-fluid">
-          {is_authen ? (
+          {props.is_authenticated ? (
             <div className="dropdown show my-2">
               <a
                 className="navbar-brand dropdown-toggle"
@@ -57,33 +55,23 @@ const Base = () => {
               <Link className="nav-link active" aria-current="page" to="/home">
                 Home
               </Link>
-              {is_authen ? (
-                <Link className="nav-link active" to="/">
+              {props.is_authenticated ? (
+                <Link
+                  className="nav-link active"
+                  to="/"
+                  onClick={props.logoutHandler}
+                >
                   <span className="navbar-text">Logged in </span>
                   Log Out
                 </Link>
               ) : (
-                <Link className="nav-link active" to="/">
+                <Link className="nav-link active" to="/log-in">
                   Log In
                 </Link>
               )}
               <p>
-                <Link
-                  className="nav-link active"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#collapseExample"
-                  to="/"
-                >
+                <Link className="nav-link active" type="button" to="/sign-up">
                   Sign-up
-                </Link>
-              </p>
-              <p className="collapse" id="collapseExample">
-                <Link className="nav-link active" to="/">
-                  As Poster{" "}
-                </Link>
-                <Link className="nav-link active" to="somewhere">
-                  As Reader
                 </Link>
               </p>
             </div>
