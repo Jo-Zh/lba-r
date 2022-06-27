@@ -1,5 +1,6 @@
 import React from "react";
 import { useParams } from "react-router-dom";
+import Button from "react-bootstrap/Button";
 
 const Detail = (props) => {
   let params = useParams();
@@ -23,6 +24,10 @@ const Detail = (props) => {
       />
 
       <p>{post.content}</p>
+
+      <Button type="button" onClick={() => props.deletHandler(post.id)}>
+        Delete
+      </Button>
     </div>
   );
 };

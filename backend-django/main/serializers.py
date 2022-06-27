@@ -7,12 +7,12 @@ from rest_framework.validators import UniqueValidator
 
 class PostsSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True)
-    # creater = serializers.ReadOnlyField(source='creater.username')
+    creater = serializers.ReadOnlyField(source='creater.username')
     # reader = serializers.ReadOnlyField(source='reader.username')
 
     class Meta:
         model = Posts
-        fields=['id','title', 'content', 'category']
+        fields=['id','title', 'content', 'category', 'creater']
 
 
 class CategorySerializer(serializers.ModelSerializer):

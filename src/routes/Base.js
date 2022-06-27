@@ -3,6 +3,7 @@ import { Outlet, Link } from "react-router-dom";
 import "./routes.css";
 
 const Base = (props) => {
+  const [jumbotron, deJumbotron] = useState(true);
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-dark">
@@ -25,7 +26,7 @@ const Base = (props) => {
                 className="dropdown-menu dropdown-menu-right"
                 aria-labelledby="dropdownMenuLink"
               >
-                <Link className="dropdown-item" to="/user/id">
+                <Link className="dropdown-item" to={`/user/${props.username}`}>
                   User Dashboard
                 </Link>
                 <Link className="dropdown-item disabled" to="/">
@@ -79,6 +80,25 @@ const Base = (props) => {
         </div>
       </nav>
       <Outlet></Outlet>
+      {jumbotron ? (
+        <div className="jumbotron">
+          <h5 className="lead">
+            Explore and Sharing learning experience here...
+          </h5>
+          <hr className="my-4" />
+          <p>Python, Javascript, C and more...</p>
+          <p className="lead">
+            <Link
+              className="btn btn-primary btn-lg"
+              to="/home"
+              role="button"
+              onClick={() => deJumbotron((prev) => !prev)}
+            >
+              Home
+            </Link>
+          </p>
+        </div>
+      ) : null}
     </>
   );
 };

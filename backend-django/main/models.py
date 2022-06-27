@@ -33,7 +33,7 @@ class Posts(models.Model):
     # content=RichTextField(null=True, blank=True)
     cover=models.ImageField(upload_to='media', null=True, blank=True)#
     # reader=models.ManyToManyField(User)
-    # creater= models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_by')
+    creater= models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_by')
     date=models.DateField(auto_now=True)
     category=models.ForeignKey(Category, on_delete=models.CASCADE)
     add_like= models.IntegerField(default=0, null=True)

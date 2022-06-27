@@ -34,7 +34,6 @@ const Newpostform = (props) => {
         <Form.Control
           type="text"
           placeholder="Username"
-          //   value={username}
           onChange={(e) => setTitle(e.target.value)}
         />
       </Form.Group>

@@ -7,24 +7,18 @@ import Button from "react-bootstrap/Button";
 const Commentsform = (props) => {
   const [title, setTitle] = useState();
   const [content, setContent] = useState();
-  // const [cover, setCover] = useState();
-  // const [category, setCategory] = useState();
 
   const formHandler = (e) => {
     e.preventDefault();
     const formdata = {
       title,
       content,
-      // cover,
-      // category,
     };
     console.log(formdata);
     props.onSubmitnewPost(formdata);
 
     setTitle("");
     setContent("");
-    // setCover("");
-    // setCategory("");
   };
 
   return (
@@ -47,24 +41,6 @@ const Commentsform = (props) => {
         />
       </Form.Group>
 
-      {/* <Form.Group controlId="formFile" className="mb-3">
-        <Form.Label>Image File</Form.Label>
-        <Form.Control type="file" onChange={(e) => setCover(e.target.value)} />
-      </Form.Group> */}
-      {/* <Form.Select
-        aria-label="Default select example"
-        onChange={(e) => setCategory(e.target.value)}
-      >
-        <option>Category of articles</option>
-        <option value="1">Code-learning</option>
-        <option value="2" disabled>
-          Two
-        </option>
-        <option value="3" disabled>
-          Three
-        </option>
-      </Form.Select> */}
-
       <Button variant="primary" type="submit">
         Post
       </Button>
@@ -72,4 +48,4 @@ const Commentsform = (props) => {
   );
 };
 
-export default Newpostform;
+export default Commentsform;

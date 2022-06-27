@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Outlet, Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./routes.css";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -7,6 +7,7 @@ import Button from "react-bootstrap/Button";
 const Loginform = (props) => {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
+  const navigate = useNavigate();
 
   const formHandler = (e) => {
     e.preventDefault();
@@ -18,6 +19,7 @@ const Loginform = (props) => {
     props.onSubmitLogin(formdata);
     setUsername("");
     setPassword("");
+    navigate("/home");
   };
 
   return (

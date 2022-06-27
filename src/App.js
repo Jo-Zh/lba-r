@@ -49,16 +49,15 @@ const dummyPosts = [
 
 const App = () => {
   const [posts, setPosts] = useState();
-  const [user, setUser] = useState();
+  const [user, setUser] = useState(
+    localStorage.getItem("user") ? localStorage.getItem("user") : null
+  );
   const [logged_in, setLogged_in] = useState(
     localStorage.getItem("token") ? true : false
   );
   // const api = useAxios();
   // const navigate = useNavigate();
   useEffect(() => {
-    if (logged_in) {
-      setUser(jwt_decode(localStorage.getItem("token")));
-    }
     axios
       .get("http://127.0.0.1:8000/posts/")
       .then(function (response) {
@@ -81,15 +80,6 @@ const App = () => {
         password: password,
         password2: passwordrepeat,
       })
-      .then((response) => {
-        // let token = response.data.access;
-        // localStorage.setItem("token", "Bearer " + token);
-        // setLogged_in(true);
-        // axios.defaults.headers.common["Authorization"] = "Bearer " + token;
-        console.log(response.data);
-        // navigate.push("/home");
-      })
-
       .catch(function (error) {
         // handle error
         console.log(error);
@@ -109,11 +99,19 @@ const App = () => {
         setLogged_in(true);
         console.log(typeof response.data.access);
         axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+        localStorage.setItem("user", username);
       })
+
       .catch(function (error) {
         // handle error
         console.log(error);
       });
+  };
+
+  const logoutHandler = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    setLogged_in(false);
   };
 
   const addnewpostform = (formdata) => {
@@ -140,9 +138,14 @@ const App = () => {
       });
   };
 
-  const logoutHandler = () => {
-    localStorage.removeItem("token");
-    setLogged_in(false);
+  const onDeleteHandler = (id) => {
+    axios.delete(`http://127.0.0.1:8000/posts/${id}`).then(() => {
+      setPosts(
+        posts.filter((item) => {
+          return item._id !== id;
+        })
+      );
+    });
   };
 
   return (
@@ -155,6 +158,7 @@ const App = () => {
               <Base
                 is_authenticated={logged_in}
                 logoutHandler={logoutHandler}
+                username={user}
               />
             }
           >
@@ -164,14 +168,23 @@ const App = () => {
             ></Route>
             <Route
               path="home/post/:somevalue"
-              element={<Detail posts={posts} />}
+              element={<Detail posts={posts} deletHandler={onDeleteHandler} />}
             />
             <Route
               path="/addnewpost"
               element={<Newpostform onSubmitnewPost={addnewpostform} />}
             />
 
-            <Route path="user/id" element={<Userprofile />} />
+            <Route
+              path="user/:username"
+              element={
+                <Userprofile
+                  posts={posts}
+                  deletHandler={onDeleteHandler}
+                  username={user}
+                />
+              }
+            />
             <Route
               path="sign-up"
               element={<Signupform onSubmitSignup={addUserform} />}

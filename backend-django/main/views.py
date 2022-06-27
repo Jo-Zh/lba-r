@@ -44,25 +44,23 @@ def getRoutes(request):
     return Response(routes)
 
 
-
-
 # for post articles
 
 class PostsList(generics.ListCreateAPIView):
     queryset = Posts.objects.all()
     serializer_class = PostsSerializer
-    # permission_classes = [permissions.IsAuthenticated]
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-    #                   IsOwnerOrReadOnly]
-
+    
+    
+    def perform_create(self, serializer):
+        serializer.save(creater=self.request.user)
     
 
 
 class PostDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Posts.objects.all()
     serializer_class = PostsSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly,
-                      IsOwnerOrReadOnly]
+    permission_classes = [IsOwnerOrReadOnly]
 
     def perform_create(self, serializer):
         serializer.save(creater=self.request.user)
@@ -118,12 +116,12 @@ def comment_detail(request, pk):
         return JsonResponse(serializer.data)
 
 
-    elif request.method == 'PUT':      
-        serializer = CommentsSerializer(comment, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    # elif request.method == 'PUT':      
+    #     serializer = CommentsSerializer(comment, data=request.data)
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response(serializer.data)
+    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     elif request.method == 'DELETE':
         comment.delete()
