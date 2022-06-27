@@ -1,6 +1,6 @@
 # Getting Started with lba-r App
 
-<img scr="./public/projectcover.png" width="300"/>
+<img src="public/projectcover.png" width="350"/>
 <p>This is a full stack project with django-rest-framework as backend and react as front-end.</p>
 ---lba stands for: learning blogs app;</br>
 ----r stands for: react as front-end;</br>
@@ -11,7 +11,7 @@ Similar app see: <a href="https://github.com/Jo-Zh/lba" >lba - (Djnago framework
 
 In the project home directory, you can run:
 
-### `npm start`
+### `npm install` `npm start`
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
