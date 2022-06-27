@@ -9,7 +9,7 @@ Similar app see: <a href="https://github.com/Jo-Zh/lba" >lba - (Djnago framework
 
 ## To run this project in developing:
 
-In the project directory, you can run:
+In the project home directory, you can run:
 
 ### `npm start`
 
@@ -22,6 +22,7 @@ You may also see any lint errors in the console.
 ### `cd backend-django`
 
 Create a python virtual env. to install all requirements (see requirements.txt).\
+Create a '/etc/secret_key.txt' file on your computer to store django secret-key.\
 Then run:
 
 ### `python manage.py runserver`
