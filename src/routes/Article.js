@@ -2,6 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const Article = (props) => {
+  const truncate = (input) =>
+    input?.length > 300 ? `${input.substring(0, 100)}...` : input;
+
   return (
     <div className="col-md-4">
       <div className="card box-shadow d-flex flex-row p-0 align-items-center h-100">
@@ -15,10 +18,10 @@ const Article = (props) => {
             <footer className="blockquote-footer">
               {props.postdate} by {props.postcreater}
             </footer>
-            <p className="lh-sm lead"> {props.postcontent}</p>
+            <p className="lh-sm lead"> {truncate(props.postcontent)}</p>
           </blockquote>
           <Link className="card-link" to={`post/${props.id}`} key={props.id}>
-            {props.id}
+            Read more...
           </Link>
         </div>
         <div className="d-flex me-4 align-items-center">

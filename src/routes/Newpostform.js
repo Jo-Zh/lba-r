@@ -33,7 +33,7 @@ const Newpostform = (props) => {
         <Form.Label>Title</Form.Label>
         <Form.Control
           type="text"
-          placeholder="Username"
+          placeholder="Title"
           onChange={(e) => setTitle(e.target.value)}
         />
       </Form.Group>
@@ -56,12 +56,8 @@ const Newpostform = (props) => {
       >
         <option>Category of articles</option>
         <option value="1">Code-learning</option>
-        <option value="2" disabled>
-          Two
-        </option>
-        <option value="3" disabled>
-          Three
-        </option>
+        <option value="2">5minsread-coding</option>
+        <option value="3">meditation</option>
       </Form.Select>
 
       <Button variant="primary" type="submit">
