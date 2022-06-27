@@ -1,6 +1,6 @@
 # Getting Started with lba-r App
 
-<img scr="./public/projectcover.png" width="300"/>
+<img src="public/projectcover.png" width="350"/>
 <p>This is a full stack project with django-rest-framework as backend and react as front-end.</p>
 ---lba stands for: learning blogs app;</br>
 ----r stands for: react as front-end;</br>
