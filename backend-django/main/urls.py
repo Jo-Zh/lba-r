@@ -18,7 +18,7 @@ urlpatterns=[
 
     path('posts/', views.PostsList.as_view(),name='posts-list'),
     path('posts/<int:pk>/', views.PostDetail.as_view()),
-    # path('users/', views.UsersList.as_view(), name='users-list'),
+    path('users/', views.UsersList.as_view(), name='users-list'),
     path('users/<int:pk>/', views.UserDetail.as_view()),
     path('comments/', views.comments_list),
     path('comments/<int:pk>', views.comment_detail),

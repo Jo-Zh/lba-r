@@ -54,8 +54,8 @@ const Home = (props) => {
             <a className="dropdown-item" href="{%url 'home'%}">
               ALL
             </a>
-            <a className="dropdown-item" href="{{c.get_absolute_url}}">
-              {props.cname}
+            <a className="dropdown-item" href="#">
+              category
             </a>
           </div>
         </div>
@@ -68,6 +68,7 @@ const Home = (props) => {
               <Article
                 key={post.id}
                 postcategory={post.category}
+                postimage={post.cover}
                 posttitle={post.title}
                 postcreater={post.creater}
                 postdate={post.date}

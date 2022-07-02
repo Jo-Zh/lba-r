@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Figure from "react-bootstrap/Figure";
 
 const Article = (props) => {
   const truncate = (input) =>
@@ -24,12 +25,15 @@ const Article = (props) => {
             Read more...
           </Link>
         </div>
-        <div className="d-flex me-4 align-items-center">
-          <img
-            alt="Thumbnail [200x250]"
-            src="{post.postcover}"
-            data-holder-rendered="true"
-          />
+        <div className="d-flex me-4 align-itecarms-center">
+          <Figure>
+            <Figure.Image
+              width={200}
+              height={250}
+              alt="Thumbnail [200x250]"
+              src={props.postimage}
+            />
+          </Figure>
         </div>
       </div>
     </div>

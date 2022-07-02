@@ -13,8 +13,8 @@ const Signupform = (props) => {
 
   const navigate = useNavigate();
   //   const [avatar, setAvatar] = useState();
-  //   const [is_poster, setIs_poster] = useState(false);
-  //   const [is_reader, setIs_reader] = useState(false);
+  const [is_poster, setIs_poster] = useState(false);
+  const [is_reader, setIs_reader] = useState(false);
 
   const formHandler = (e) => {
     e.preventDefault();
@@ -23,6 +23,8 @@ const Signupform = (props) => {
       password,
       passwordrepeat,
       email,
+      is_poster,
+      is_reader,
     };
     console.log(formdata);
     props.onSubmitSignup(formdata);
@@ -35,8 +37,8 @@ const Signupform = (props) => {
 
     navigate("/home", { replace: true });
     // setAvatar("");
-    // setIs_poster(false);
-    // setIs_reader(false);
+    setIs_poster(false);
+    setIs_reader(false);
   };
 
   return (
@@ -81,12 +83,6 @@ const Signupform = (props) => {
           onChange={(e) => setPasswordrepeat(e.target.value)}
         />
       </Form.Group>
-
-      {/* <Form.Group controlId="formFile" className="mb-3">
-        <Form.Label>avatar img</Form.Label>
-        <Form.Control type="file" onChange={(e) => setAvatar(e.target.value)} />
-      </Form.Group>
-
       <div key="inline-radio" className="mb-3">
         <Form.Check
           inline
@@ -106,7 +102,14 @@ const Signupform = (props) => {
           id="inline-radio-2"
           onChange={(e) => setIs_reader(e.target.value === "on")}
         />
-      </div> */}
+      </div>
+
+      {/* <Form.Group controlId="formFile" className="mb-3">
+        <Form.Label>avatar img</Form.Label>
+        <Form.Control type="file" onChange={(e) => setAvatar(e.target.value)} />
+      </Form.Group>
+
+       */}
 
       <Button variant="primary" type="submit">
         Submit

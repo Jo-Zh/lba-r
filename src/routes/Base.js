@@ -26,7 +26,11 @@ const Base = (props) => {
                 className="dropdown-menu dropdown-menu-right"
                 aria-labelledby="dropdownMenuLink"
               >
-                <Link className="dropdown-item" to={`/user/${props.username}`}>
+                <Link
+                  className="dropdown-item"
+                  to={`/user/${props.user}`}
+                  onClick={props.getUserHandler}
+                >
                   User Dashboard
                 </Link>
                 <Link className="dropdown-item disabled" to="/">

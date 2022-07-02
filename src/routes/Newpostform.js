@@ -7,23 +7,31 @@ import Button from "react-bootstrap/Button";
 const Newpostform = (props) => {
   const [title, setTitle] = useState();
   const [content, setContent] = useState();
-  // const [cover, setCover] = useState();
+  const [cover, setCover] = useState(null);
   const [category, setCategory] = useState();
 
   const formHandler = (e) => {
     e.preventDefault();
-    const formdata = {
-      title,
-      content,
-      // cover,
-      category,
-    };
-    console.log(formdata);
-    props.onSubmitnewPost(formdata);
+
+    const uploadForm = new FormData();
+    if (cover) {
+      uploadForm.append("cover", cover);
+    }
+    uploadForm.append("title", title);
+    uploadForm.append("content", content);
+    uploadForm.append("category", category);
+    // const formdata = {
+    //   title,
+    //   content,
+    //   cover,
+    //   category,
+    // };
+    // console.log(formdata);
+    props.onSubmitnewPost(uploadForm);
 
     setTitle("");
     setContent("");
-    // setCover("");
+    setCover("");
     setCategory("");
   };
 
@@ -46,10 +54,16 @@ const Newpostform = (props) => {
         />
       </Form.Group>
 
-      {/* <Form.Group controlId="formFile" className="mb-3">
+      <Form.Group controlId="formFile" className="mb-3">
         <Form.Label>Image File</Form.Label>
-        <Form.Control type="file" onChange={(e) => setCover(e.target.value)} />
-      </Form.Group> */}
+        <Form.Control
+          type="file"
+          onChange={(e) => {
+            console.log(e.target.files);
+            setCover(e.target.files[0] ? e.target.files[0] : null);
+          }}
+        />
+      </Form.Group>
       <Form.Select
         aria-label="Default select example"
         onChange={(e) => setCategory(parseInt(e.target.value))}

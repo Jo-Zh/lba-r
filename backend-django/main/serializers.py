@@ -3,16 +3,24 @@ from .models import Posts, Category, Notes, User, Comments
 from django.contrib.auth.password_validation import validate_password
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework.validators import UniqueValidator
-# from django.contrib.auth.models import User
+
+
+class UserSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = User
+        fields = ['id','username', 'email', 'last_login', 'is_poster','is_reader' ]
+
 
 class PostsSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True)
     creater = serializers.ReadOnlyField(source='creater.username')
-    # reader = serializers.ReadOnlyField(source='reader.username')
+    reader = UserSerializer(many=True, required=False)
 
     class Meta:
         model = Posts
-        fields=['id','title', 'content', 'category', 'creater']
+        fields='__all__'
+        # fields=['id','title', 'content', 'category', 'creater']
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -20,12 +28,8 @@ class CategorySerializer(serializers.ModelSerializer):
         model = Category
         fields='__all__'
 
-class UserSerializer(serializers.ModelSerializer):
-    # created_by=serializers.PrimaryKeyRelatedField(many=True, queryset=Posts.objects.all())
-    class Meta:
-        model = User
-        fields = '__all__'
-        # fields = ['username', 'email', 'created_by']
+
+     
 
 class NotesSerializer(serializers.ModelSerializer):
     class Meta:
@@ -59,7 +63,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('username', 'email','password', 'password2')
+        fields = ('username', 'email','password', 'password2', 'is_reader', 'is_poster')
 
     def validate(self, attrs):
         if attrs['password'] != attrs['password2']:
@@ -70,10 +74,9 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         user = User.objects.create(
-            username=validated_data['username'], email=validated_data['email']
+            username=validated_data['username'], email=validated_data['email'], is_poster=validated_data["is_poster"], is_reader=validated_data["is_reader"]
         )
         user.set_password(validated_data['password'])
-        # user.email=validated_data['password']
         user.save()
 
         return user

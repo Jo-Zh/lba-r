@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.urls import reverse
-# from ckeditor.fields import RichTextField
+
 
 
 # Create your models here.
@@ -9,7 +9,7 @@ class User(AbstractUser):
     is_reader=models.BooleanField(default=False)
     is_poster=models.BooleanField(default=False)
     avatar=models.ImageField(upload_to='media', null=True, blank=True)
-    email=models.EmailField(max_length=254)
+    email=models.EmailField(unique=True)
    
     def get_absolute_url(self):
         return reverse('userprofile', args=[self.id])
@@ -30,15 +30,14 @@ class Category(models.Model):
 class Posts(models.Model):
     title=models.CharField(max_length=255)
     content=models.TextField(null=True, blank=True)
-    # content=RichTextField(null=True, blank=True)
     cover=models.ImageField(upload_to='media', null=True, blank=True)#
-    # reader=models.ManyToManyField(User)
+    reader=models.ManyToManyField(User, null=True, blank=True)
     creater= models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_by')
     date=models.DateField(auto_now=True)
     category=models.ForeignKey(Category, on_delete=models.CASCADE)
     add_like= models.IntegerField(default=0, null=True)
     set_public=models.BooleanField(default=False)
-
+    
     class Meta:
         ordering=('-id',)
 
@@ -47,10 +46,6 @@ class Posts(models.Model):
 
     def get_absolute_url(self):
         return reverse('home')
-
-    # def save(self, *args, **kwargs):
-    #     super().save(*args, **kwargs)
-
 
 
 class CommentManager(models.Manager):
@@ -67,8 +62,8 @@ class CommentManager(models.Manager):
 
 class Comments(models.Model):
     post=models.ForeignKey(Posts, on_delete=models.CASCADE, related_name='comments_on')
-    parent=models.ForeignKey("self", on_delete=models.RESTRICT, null=True, blank=True)
-    name=models.CharField(max_length=155, default='default')
+    parent=models.ForeignKey("self", on_delete=models.CASCADE, null=True, blank=True)
+    name=models.ForeignKey(User, on_delete=models.CASCADE, related_name='comments_owner', null=True, blank=True)
     text=models.TextField(null=True, blank=True)
     date=models.DateTimeField(auto_now_add=True)
  
