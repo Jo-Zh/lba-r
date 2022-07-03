@@ -20,18 +20,12 @@ const Newpostform = (props) => {
     uploadForm.append("title", title);
     uploadForm.append("content", content);
     uploadForm.append("category", category);
-    // const formdata = {
-    //   title,
-    //   content,
-    //   cover,
-    //   category,
-    // };
-    // console.log(formdata);
+
     props.onSubmitnewPost(uploadForm);
 
     setTitle("");
     setContent("");
-    setCover("");
+    setCover(null);
     setCategory("");
   };
 

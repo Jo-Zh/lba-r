@@ -9,7 +9,8 @@ class UserSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = User
-        fields = ['id','username', 'email', 'last_login', 'is_poster','is_reader' ]
+        fields ='__all__'
+        #  ['id','username', 'email', 'last_login', 'is_poster','is_reader']
 
 
 class PostsSerializer(serializers.ModelSerializer):
@@ -60,10 +61,9 @@ class RegisterSerializer(serializers.ModelSerializer):
             required=True,
             validators=[UniqueValidator(queryset=User.objects.all())]
             )
-
     class Meta:
         model = User
-        fields = ('username', 'email','password', 'password2', 'is_reader', 'is_poster')
+        fields =['username', 'email','password', 'password2', 'is_reader', 'is_poster', 'avatar']
 
     def validate(self, attrs):
         if attrs['password'] != attrs['password2']:
@@ -74,9 +74,8 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         user = User.objects.create(
-            username=validated_data['username'], email=validated_data['email'], is_poster=validated_data["is_poster"], is_reader=validated_data["is_reader"]
+            username=validated_data['username'], email=validated_data['email'], password=validated_data['password'],
+            is_poster=validated_data['is_poster'], is_reader=validated_data['is_reader']
         )
-        user.set_password(validated_data['password'])
-        user.save()
 
         return user

@@ -20,12 +20,12 @@ export default function useAxios() {
   const getPosts = () => {
     axios
       .get("http://127.0.0.1:8000/posts/")
-      .then(function (response) {
+      .then(function(response) {
         // handle success
         setPosts(response.data.results);
         // console.log(response.data.results);
       })
-      .catch(function (error) {
+      .catch(function(error) {
         // handle error
         console.log(error);
       });
@@ -37,29 +37,20 @@ export default function useAxios() {
       .get(`http://127.0.0.1:8000/users/${id}`, {
         headers: { Authorization: token },
       })
-      .then(function (res) {
+      .then(function(res) {
         // setUser(res.data);
         localStorage.setItem("is_poster", res.data.is_poster);
         console.log(res.data);
       })
-      .catch(function (error) {
+      .catch(function(error) {
         console.log(error);
       });
   };
 
   const addUserform = (formdata) => {
-    const { username, email, password, passwordrepeat, is_poster, is_reader } =
-      formdata;
     axios
-      .post("http://127.0.0.1:8000/register/", {
-        username,
-        email,
-        password: password,
-        password2: passwordrepeat,
-        is_poster,
-        is_reader,
-      })
-      .catch(function (error) {
+      .post("http://127.0.0.1:8000/register/", formdata)
+      .catch(function(error) {
         // handle error
         console.log(error);
       });
@@ -86,7 +77,7 @@ export default function useAxios() {
         userDetail(user_data.user_id);
       })
 
-      .catch(function (error) {
+      .catch(function(error) {
         // handle error
         console.log(error);
       });
@@ -114,7 +105,7 @@ export default function useAxios() {
         });
       })
       .then(getPosts())
-      .catch(function (error) {
+      .catch(function(error) {
         // handle error
         console.log(error);
       });
@@ -133,7 +124,7 @@ export default function useAxios() {
           })
         );
       })
-      .catch(function (error) {
+      .catch(function(error) {
         // handle error
         console.log(error);
       });
@@ -151,7 +142,7 @@ export default function useAxios() {
         localStorage.removeItem("token");
         localStorage.removeItem("user_data");
       })
-      .catch(function (error) {
+      .catch(function(error) {
         // handle error
         console.log(error);
       });

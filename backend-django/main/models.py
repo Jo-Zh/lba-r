@@ -31,7 +31,7 @@ class Posts(models.Model):
     title=models.CharField(max_length=255)
     content=models.TextField(null=True, blank=True)
     cover=models.ImageField(upload_to='media', null=True, blank=True)#
-    reader=models.ManyToManyField(User, null=True, blank=True)
+    reader=models.ManyToManyField(User)
     creater= models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_by')
     date=models.DateField(auto_now=True)
     category=models.ForeignKey(Category, on_delete=models.CASCADE)

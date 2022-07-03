@@ -3,52 +3,51 @@ import { Outlet, Link } from "react-router-dom";
 import "./routes.css";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import DropdownButton from "react-bootstrap/DropdownButton";
 import { useNavigate } from "react-router-dom";
+import { upload } from "@testing-library/user-event/dist/upload";
+import Dropdown from "react-bootstrap/Dropdown";
 
 const Signupform = (props) => {
   const [username, setUsername] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
-  const [passwordrepeat, setPasswordrepeat] = useState();
+  const [password2, setPassword2] = useState();
+  // const [avatar, setAvatar] = useState(null);
+  const [poster_or_reader, setPoster_or_reade] = useState("poster");
 
   const navigate = useNavigate();
-  //   const [avatar, setAvatar] = useState();
-  const [is_poster, setIs_poster] = useState(false);
-  const [is_reader, setIs_reader] = useState(false);
 
   const formHandler = (e) => {
     e.preventDefault();
+
     const formdata = {
       username,
       password,
-      passwordrepeat,
+      password2,
       email,
-      is_poster,
-      is_reader,
+      is_poster: poster_or_reader === "poster" ? true : false,
+      is_reader: poster_or_reader === "reader" ? true : false,
     };
-    console.log(formdata);
+
     props.onSubmitSignup(formdata);
 
     setUsername("");
     setEmail("");
-
     setPassword("");
-    setPasswordrepeat("");
+    setPassword2("");
 
     navigate("/home", { replace: true });
-    // setAvatar("");
-    setIs_poster(false);
-    setIs_reader(false);
   };
 
   return (
-    <Form onSubmit={formHandler}>
+    <Form id="form" onSubmit={formHandler}>
       <Form.Group className="mb-3" controlId="formBasicPassword">
         <Form.Label>Username</Form.Label>
         <Form.Control
           type="text"
           placeholder="Username"
-          //   value={username}
+          // name="username"
           onChange={(e) => setUsername(e.target.value)}
         />
       </Form.Group>
@@ -57,7 +56,7 @@ const Signupform = (props) => {
         <Form.Control
           type="email"
           placeholder="Enter email"
-          //   value={email}
+          // name="email"
           onChange={(e) => setEmail(e.target.value)}
         />
         <Form.Text className="text-muted">
@@ -70,7 +69,7 @@ const Signupform = (props) => {
         <Form.Control
           type="password"
           placeholder="Password"
-          //   value={password}
+          // name="password"
           onChange={(e) => setPassword(e.target.value)}
         />
       </Form.Group>
@@ -79,37 +78,39 @@ const Signupform = (props) => {
         <Form.Control
           type="password"
           placeholder="Password Repeat"
-          //   value={passwordrepeat}
-          onChange={(e) => setPasswordrepeat(e.target.value)}
+          // name="password2"
+          onChange={(e) => setPassword2(e.target.value)}
         />
       </Form.Group>
-      <div key="inline-radio" className="mb-3">
-        <Form.Check
-          inline
-          label="as poster"
-          name="poster-reader"
-          type="radio"
-          //   value={true}
-          id="inline-radio-1"
-          onChange={(e) => setIs_poster(e.target.value === "on")}
-        />
-        <Form.Check
-          inline
-          label="as reader"
-          name="poster-reader"
-          type="radio"
-          //   value={true}
-          id="inline-radio-2"
-          onChange={(e) => setIs_reader(e.target.value === "on")}
-        />
-      </div>
+      <DropdownButton id="poster-reader" title="Dropdown button">
+        <Dropdown.Item
+          onClick={() => {
+            setPoster_or_reade("poster");
+          }}
+        >
+          Poster
+        </Dropdown.Item>
+        <Dropdown.Item
+          onClick={() => {
+            setPoster_or_reade("reader");
+          }}
+        >
+          Reader
+        </Dropdown.Item>
+      </DropdownButton>
+      <br />
 
       {/* <Form.Group controlId="formFile" className="mb-3">
         <Form.Label>avatar img</Form.Label>
-        <Form.Control type="file" onChange={(e) => setAvatar(e.target.value)} />
-      </Form.Group>
-
-       */}
+        <Form.Control
+          type="file"
+          // name="avatar"
+          onChange={(e) => {
+            console.log(e.target.files);
+            setAvatar(e.target.files[0] ? e.target.files[0] : null);
+          }}
+        />
+      </Form.Group> */}
 
       <Button variant="primary" type="submit">
         Submit
