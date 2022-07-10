@@ -25,7 +25,7 @@ it("renders correctly", () => {
   expect(tree).toMatchSnapshot();
 });
 
-it("renders with or without a name", () => {
+it("renders article components number correctly", () => {
   act(() => {
     const posts = [
       {
