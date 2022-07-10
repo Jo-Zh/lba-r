@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<form
+  className="form-group bg-light"
+  method="POST"
+  role="search"
+>
+  <div
+    className="input-group input-group-sm"
+  >
+    <input
+      aria-describedby="inputGroup-sizing-sm"
+      className="text-dark my-1"
+      name="search"
+      placeholder="Search for "
+      type="text"
+    />
+    <button
+      className="btn btn-outline-warning btn-sm my-1"
+      type="submit"
+    >
+      <i
+        className="bi bi-search"
+      >
+        IN
+      </i>
+    </button>
+    <select
+      className="rounded my-1 "
+      defaultValue="content"
+      id="floatingSelectGrid"
+      name="field"
+    >
+      <option
+        value="title"
+      >
+        title
+      </option>
+      <option
+        value="content"
+      >
+        content
+      </option>
+      <option
+        value="writer"
+      >
+        poster
+      </option>
+    </select>
+  </div>
+</form>
+`;

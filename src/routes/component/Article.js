@@ -2,13 +2,17 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Figure from "react-bootstrap/Figure";
 
-// const truncate = (input) => {
-//   return input?.length > 300 ? `${input.substring(0, 100)}...` : input;
-// };
+const truncate = (input) => {
+  try {
+    return input.length > 300 ? `${input.substring(0, 100)}...` : input;
+  } catch (error) {
+    return { error };
+  }
+};
 
 const Article = (props) => {
   return (
-    <div className="col-md-4">
+    <div id="test-article" className="col-md-4">
       <div className="card box-shadow d-flex flex-row p-0 align-items-center h-100">
         <div className=" card-body d-flex flex-column align-items-start m-0 h-100">
           <p className="bi bi-tag">{props.postcategory}</p>
@@ -20,7 +24,7 @@ const Article = (props) => {
             <footer className="blockquote-footer">
               {props.postdate} by {props.postcreater}
             </footer>
-            <p className="lh-sm lead"> {props.postcontent}</p>
+            <p className="lh-sm lead">{truncate(props.postcontent)}</p>
           </blockquote>
           <Link className="card-link" to={`post/${props.id}`} key={props.id}>
             Read more...
