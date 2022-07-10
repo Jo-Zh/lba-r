@@ -20,12 +20,12 @@ export default function useAxios() {
   const getPosts = () => {
     axios
       .get("http://127.0.0.1:8000/posts/")
-      .then(function(response) {
+      .then(function (response) {
         // handle success
         setPosts(response.data.results);
         // console.log(response.data.results);
       })
-      .catch(function(error) {
+      .catch(function (error) {
         // handle error
         console.log(error);
       });
@@ -37,12 +37,12 @@ export default function useAxios() {
       .get(`http://127.0.0.1:8000/users/${id}`, {
         headers: { Authorization: token },
       })
-      .then(function(res) {
+      .then(function (res) {
         // setUser(res.data);
         localStorage.setItem("is_poster", res.data.is_poster);
         console.log(res.data);
       })
-      .catch(function(error) {
+      .catch(function (error) {
         console.log(error);
       });
   };
@@ -50,7 +50,7 @@ export default function useAxios() {
   const addUserform = (formdata) => {
     axios
       .post("http://127.0.0.1:8000/register/", formdata)
-      .catch(function(error) {
+      .catch(function (error) {
         // handle error
         console.log(error);
       });
@@ -66,8 +66,10 @@ export default function useAxios() {
       .then((response) => {
         console.log(response.data);
         let token = response.data.access;
+        let token_2 = response.data.refresh;
         let user_data = JSON.stringify(jwt_decode(response.data.access));
         localStorage.setItem("token", "Bearer " + token);
+        localStorage.setItem("token2", "Bearer " + token_2);
         localStorage.setItem("user_data", user_data);
         setLogged_in(true);
         axios.defaults.headers.common["Authorization"] = "Bearer " + token;
@@ -77,7 +79,7 @@ export default function useAxios() {
         userDetail(user_data.user_id);
       })
 
-      .catch(function(error) {
+      .catch(function (error) {
         // handle error
         console.log(error);
       });
@@ -105,7 +107,7 @@ export default function useAxios() {
         });
       })
       .then(getPosts())
-      .catch(function(error) {
+      .catch(function (error) {
         // handle error
         console.log(error);
       });
@@ -124,7 +126,7 @@ export default function useAxios() {
           })
         );
       })
-      .catch(function(error) {
+      .catch(function (error) {
         // handle error
         console.log(error);
       });
@@ -142,7 +144,7 @@ export default function useAxios() {
         localStorage.removeItem("token");
         localStorage.removeItem("user_data");
       })
-      .catch(function(error) {
+      .catch(function (error) {
         // handle error
         console.log(error);
       });
