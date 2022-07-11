@@ -20,7 +20,7 @@ const Category = () => {
           ALL
         </a>
         <a className="dropdown-item" href="#">
-          category
+          code-learning
         </a>
       </div>
     </div>

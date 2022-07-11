@@ -25,11 +25,11 @@ const App = () => {
     deleteUserHandler,
   } = useAxios();
 
-  const onAddUserform = (formdata) => {
+  const onAddUserform = (formdata: { lable: string; to: string }) => {
     addUserform(formdata);
   };
 
-  const onLoginform = (formdata) => {
+  const onLoginform = (formdata: { label: string; to: string }) => {
     loginform(formdata);
   };
 
@@ -46,15 +46,15 @@ const App = () => {
     logoutHandler();
   };
 
-  const onAddnewpostform = (formdata) => {
+  const onAddnewpostform = (formdata: { label: string; to: string }) => {
     addnewpostform(formdata);
   };
 
-  const onDeleteHandler = (id) => {
+  const onDeleteHandler = (id: { number: any }) => {
     deleteHandler(id);
   };
 
-  const onDeleteUserHandler = (id) => {
+  const onDeleteUserHandler = (id: { number: any }) => {
     deleteUserHandler(id);
   };
 

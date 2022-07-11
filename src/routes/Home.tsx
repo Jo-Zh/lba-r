@@ -3,7 +3,7 @@ import Article from "./component/Article";
 import Search from "./component/Search";
 import Category from "./component/Category";
 
-const Home = (props) => {
+const Home = ({ posts }: HomeProps) => {
   return (
     <div>
       <div className="row text-center py-3">
@@ -16,7 +16,7 @@ const Home = (props) => {
 
       <div className="container-fluid px-4 my-4">
         <div className="row g-4 ">
-          {props.posts.map((post) => {
+          {posts.map((post) => {
             return (
               <Article
                 key={post.id}
@@ -35,6 +35,18 @@ const Home = (props) => {
       </div>
     </div>
   );
+};
+
+type HomeProps = {
+  posts: {
+    id: string;
+    title: string;
+    content: string;
+    category: string;
+    creater: string;
+    date: Date;
+    cover?: String;
+  }[];
 };
 
 export default Home;
