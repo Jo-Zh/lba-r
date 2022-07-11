@@ -50,11 +50,11 @@ const App = () => {
     addnewpostform(formdata);
   };
 
-  const onDeleteHandler = (id: { number: any }) => {
+  const onDeleteHandler = (id: number) => {
     deleteHandler(id);
   };
 
-  const onDeleteUserHandler = (id: { number: any }) => {
+  const onDeleteUserHandler = (id: number) => {
     deleteUserHandler(id);
   };
 
