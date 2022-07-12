@@ -1,10 +1,15 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-const Userprofile = (props) => {
-  const user_id = props.user_data.user_id;
-  const user = props.user_data.username;
-  const myposts = props.posts.filter((item) => item.creater === user);
+const Userprofile = ({
+  posts,
+  user_data,
+  deletHandler,
+  deletUserHandler,
+}: UserprofileProps) => {
+  const user_id = user_data.user_id;
+  const user = user_data.username;
+  const myposts = posts.filter((item) => item.creater === user);
   return (
     <>
       <h1 className="box">This is {user}'s profile</h1>
@@ -19,12 +24,9 @@ const Userprofile = (props) => {
           <div key={item.id}>
             <hr />
             <NavLink to={`/home/post/${item.id}`}>
-              {item.title} on {item.date}
+              {item.title} on {item.date.toString()}
             </NavLink>
-            <span
-              className="nav-link"
-              onClick={() => props.deletHandler(item.id)}
-            >
+            <span className="nav-link" onClick={() => deletHandler(item.id)}>
               delete
             </span>
           </div>
@@ -34,7 +36,7 @@ const Userprofile = (props) => {
       <NavLink
         to="/home"
         onClick={() => {
-          props.deletUserHandler(user_id);
+          deletUserHandler(user_id);
           console.log(user_id);
         }}
       >
@@ -43,5 +45,21 @@ const Userprofile = (props) => {
     </>
   );
 };
-
+type UserprofileProps = {
+  posts: {
+    id: number;
+    title: string;
+    content: string;
+    category: string;
+    creater: string;
+    date: Date;
+    cover?: String;
+  }[];
+  user_data: {
+    user_id: number;
+    username: string;
+  };
+  deletHandler: (x: number) => void;
+  deletUserHandler: (x: number) => void;
+};
 export default Userprofile;
