@@ -1,27 +1,25 @@
 import React, { useState } from "react";
-import { Outlet, Link } from "react-router-dom";
 import "./routes.css";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import { useNavigate } from "react-router-dom";
-import { upload } from "@testing-library/user-event/dist/upload";
 import Dropdown from "react-bootstrap/Dropdown";
 
-const Signupform = (props) => {
-  const [username, setUsername] = useState();
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-  const [password2, setPassword2] = useState();
+const Signupform = ({ onSubmitSignup }: SignupformProps) => {
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [password2, setPassword2] = useState("");
   // const [avatar, setAvatar] = useState(null);
   const [poster_or_reader, setPoster_or_reade] = useState("poster");
 
   const navigate = useNavigate();
 
-  const formHandler = (e) => {
+  const formHandler = (e: React.FormEvent) => {
     e.preventDefault();
 
-    const formdata = {
+    const formdata: form_data = {
       username,
       password,
       password2,
@@ -30,7 +28,7 @@ const Signupform = (props) => {
       is_reader: poster_or_reader === "reader" ? true : false,
     };
 
-    props.onSubmitSignup(formdata);
+    onSubmitSignup(formdata);
 
     setUsername("");
     setEmail("");
@@ -48,7 +46,9 @@ const Signupform = (props) => {
           type="text"
           placeholder="Username"
           // name="username"
-          onChange={(e) => setUsername(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setUsername(e.target.value)
+          }
         />
       </Form.Group>
       <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -57,7 +57,9 @@ const Signupform = (props) => {
           type="email"
           placeholder="Enter email"
           // name="email"
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setEmail(e.target.value)
+          }
         />
         <Form.Text className="text-muted">
           We'll never share your email with anyone else.
@@ -70,7 +72,9 @@ const Signupform = (props) => {
           type="password"
           placeholder="Password"
           // name="password"
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setPassword(e.target.value)
+          }
         />
       </Form.Group>
       <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -79,7 +83,9 @@ const Signupform = (props) => {
           type="password"
           placeholder="Password Repeat"
           // name="password2"
-          onChange={(e) => setPassword2(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setPassword2(e.target.value)
+          }
         />
       </Form.Group>
       <DropdownButton id="poster-reader" title="Dropdown button">
@@ -118,5 +124,17 @@ const Signupform = (props) => {
     </Form>
   );
 };
+
+interface form_data {
+  username: string;
+  password?: string;
+  password2?: string;
+  email: string;
+  is_poster: boolean;
+  is_reader: boolean;
+}
+interface SignupformProps {
+  onSubmitSignup: (form_data: form_data) => void;
+}
 
 export default Signupform;

@@ -6,7 +6,7 @@ const Detail = ({ posts, deletHandler }: DetailProps) => {
   const { somevalue } = useParams<{ somevalue?: string }>();
 
   const [post] = posts.filter((post) => {
-    return post.id === parseInt(somevalue as string);
+    return post.id.toString() === somevalue;
   });
 
   return (

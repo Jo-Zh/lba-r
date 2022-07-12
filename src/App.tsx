@@ -25,11 +25,11 @@ const App = () => {
     deleteUserHandler,
   } = useAxios();
 
-  const onAddUserform = (formdata: { lable: string; to: string }) => {
+  const onAddUserform = (formdata: form_data) => {
     addUserform(formdata);
   };
 
-  const onLoginform = (formdata: { label: string; to: string }) => {
+  const onLoginform = (formdata: any) => {
     loginform(formdata);
   };
 
@@ -46,7 +46,7 @@ const App = () => {
     logoutHandler();
   };
 
-  const onAddnewpostform = (formdata: { label: string; to: string }) => {
+  const onAddnewpostform = (formdata: any) => {
     addnewpostform(formdata);
   };
 
@@ -116,4 +116,14 @@ const App = () => {
     </Router>
   );
 };
+
+interface form_data {
+  username: string;
+  password?: string;
+  password2?: string;
+  email: string;
+  is_poster: boolean;
+  is_reader: boolean;
+}
+
 export default App;

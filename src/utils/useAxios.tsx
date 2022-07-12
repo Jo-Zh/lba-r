@@ -2,11 +2,34 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 
+interface form_data {
+  username: string;
+  password?: string;
+  password2?: string;
+  email: string;
+  is_poster: boolean;
+  is_reader: boolean;
+}
+interface Login_Data {
+  username: string;
+  password: String;
+}
+
+interface Article_Data {
+  id: number;
+  title: string;
+  content: string;
+  category: string;
+  creater: string;
+  date: Date;
+  image?: string;
+}
+
 export default function useAxios() {
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState<Article_Data[]>([]);
   const [user_data, setUser_data] = useState(
     localStorage.getItem("user_data")
-      ? JSON.parse(localStorage.getItem("user_data"))
+      ? JSON.parse(localStorage.getItem("user_data") || "")
       : null
   );
 
@@ -31,8 +54,8 @@ export default function useAxios() {
       });
   };
 
-  const userDetail = (id) => {
-    const token = localStorage.getItem("token");
+  const userDetail = (id: number) => {
+    const token: string | any = localStorage.getItem("token");
     axios
       .get(`http://127.0.0.1:8000/users/${id}`, {
         headers: { Authorization: token },
@@ -47,7 +70,7 @@ export default function useAxios() {
       });
   };
 
-  const addUserform = (formdata) => {
+  const addUserform = (formdata: form_data) => {
     axios
       .post("http://127.0.0.1:8000/register/", formdata)
       .catch(function (error) {
@@ -56,7 +79,7 @@ export default function useAxios() {
       });
   };
 
-  const loginform = (formdata) => {
+  const loginform = (formdata: Login_Data) => {
     const { username, password } = formdata;
     axios
       .post("http://127.0.0.1:8000/token/", {
@@ -91,8 +114,8 @@ export default function useAxios() {
     setLogged_in(false);
   };
 
-  const addnewpostform = (formdata) => {
-    const token = localStorage.getItem("token");
+  const addnewpostform = (formdata: FormData) => {
+    const token: string | any = localStorage.getItem("token");
     axios
       .post("http://127.0.0.1:8000/posts/", formdata, {
         headers: {
@@ -102,19 +125,21 @@ export default function useAxios() {
       })
       .then((response) => {
         setPosts((prev) => {
-          console.log(response.data);
+          // console.log(response.data);
           return [...prev, response.data];
         });
       })
-      .then(getPosts())
+      .then(() => {
+        getPosts();
+      })
       .catch(function (error) {
         // handle error
         console.log(error);
       });
   };
 
-  const deleteHandler = (id) => {
-    const token = localStorage.getItem("token");
+  const deleteHandler = (id: number) => {
+    const token: string | any = localStorage.getItem("token");
     axios
       .delete(`http://127.0.0.1:8000/posts/${id}`, {
         headers: { Authorization: token },
@@ -122,7 +147,7 @@ export default function useAxios() {
       .then(() => {
         setPosts(
           posts.filter((item) => {
-            return item._id !== id;
+            return item.id !== id;
           })
         );
       })
@@ -132,8 +157,8 @@ export default function useAxios() {
       });
   };
 
-  const deleteUserHandler = (id) => {
-    const token = localStorage.getItem("token");
+  const deleteUserHandler = (id: number) => {
+    const token: string | any = localStorage.getItem("token");
     axios
       .delete(`http://127.0.0.1:8000/users/${id}`, {
         headers: { Authorization: token },

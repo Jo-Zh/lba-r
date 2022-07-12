@@ -1,16 +1,15 @@
 import React, { useState } from "react";
-import { Outlet, Link } from "react-router-dom";
 import "./routes.css";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
-const Newpostform = (props) => {
-  const [title, setTitle] = useState();
-  const [content, setContent] = useState();
-  const [cover, setCover] = useState(null);
-  const [category, setCategory] = useState();
+const Newpostform = ({ onSubmitnewPost }: PostProps) => {
+  const [title, setTitle] = useState<string>("");
+  const [content, setContent] = useState<string>("");
+  const [cover, setCover] = useState<File | null>(null);
+  const [category, setCategory] = useState<string>("");
 
-  const formHandler = (e) => {
+  const formHandler = (e: React.FormEvent) => {
     e.preventDefault();
 
     const uploadForm = new FormData();
@@ -21,7 +20,7 @@ const Newpostform = (props) => {
     uploadForm.append("content", content);
     uploadForm.append("category", category);
 
-    props.onSubmitnewPost(uploadForm);
+    onSubmitnewPost(uploadForm);
 
     setTitle("");
     setContent("");
@@ -36,7 +35,9 @@ const Newpostform = (props) => {
         <Form.Control
           type="text"
           placeholder="Title"
-          onChange={(e) => setTitle(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setTitle(e.target.value)
+          }
         />
       </Form.Group>
       <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
@@ -44,7 +45,9 @@ const Newpostform = (props) => {
         <Form.Control
           as="textarea"
           rows={3}
-          onChange={(e) => setContent(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setContent(e.target.value)
+          }
         />
       </Form.Group>
 
@@ -52,15 +55,18 @@ const Newpostform = (props) => {
         <Form.Label>Image File</Form.Label>
         <Form.Control
           type="file"
-          onChange={(e) => {
-            console.log(e.target.files);
-            setCover(e.target.files[0] ? e.target.files[0] : null);
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            // console.log(e.target.files);
+            let file = e.target.files;
+            setCover(file ? file[0] : null);
           }}
         />
       </Form.Group>
       <Form.Select
         aria-label="Default select example"
-        onChange={(e) => setCategory(parseInt(e.target.value))}
+        onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+          setCategory(e.target.value)
+        }
       >
         <option>Category of articles</option>
         <option value="1">Code-learning</option>
@@ -75,4 +81,7 @@ const Newpostform = (props) => {
   );
 };
 
+interface PostProps {
+  onSubmitnewPost: (x: FormData) => void;
+}
 export default Newpostform;

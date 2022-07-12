@@ -1,22 +1,22 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./routes.css";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
-const Loginform = (props) => {
-  const [username, setUsername] = useState();
-  const [password, setPassword] = useState();
+const Loginform = ({ onSubmitLogin }: LoginProps) => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const formHandler = (e) => {
+  const formHandler = (e: React.FormEvent) => {
     e.preventDefault();
-    const formdata = {
+    const formdata: Login_Data = {
       username,
       password,
     };
 
-    props.onSubmitLogin(formdata);
+    onSubmitLogin(formdata);
     setUsername("");
     setPassword("");
     navigate("/home");
@@ -52,7 +52,9 @@ const Loginform = (props) => {
           type="password"
           placeholder="Password"
           //   value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setPassword(e.target.value)
+          }
         />
       </Form.Group>
 
@@ -62,5 +64,11 @@ const Loginform = (props) => {
     </Form>
   );
 };
-
+interface Login_Data {
+  username: string;
+  password: String;
+}
+interface LoginProps {
+  onSubmitLogin: (x: Login_Data) => void;
+}
 export default Loginform;

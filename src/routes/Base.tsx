@@ -2,13 +2,18 @@ import React, { useState } from "react";
 import { Outlet, Link } from "react-router-dom";
 import "./routes.css";
 
-const Base = (props) => {
+const Base = ({
+  user,
+  is_authenticated,
+  logoutHandler,
+  getUserHandler,
+}: BaseProps) => {
   const [jumbotron, deJumbotron] = useState(true);
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-dark">
         <div className="container-fluid">
-          {props.is_authenticated ? (
+          {is_authenticated ? (
             <div className="dropdown show my-2">
               <a
                 className="navbar-brand dropdown-toggle"
@@ -28,8 +33,8 @@ const Base = (props) => {
               >
                 <Link
                   className="dropdown-item"
-                  to={`/user/${props.user}`}
-                  onClick={props.getUserHandler}
+                  to={`/user/${user}`}
+                  onClick={getUserHandler}
                 >
                   User Dashboard
                 </Link>
@@ -60,11 +65,11 @@ const Base = (props) => {
               <Link className="nav-link active" aria-current="page" to="/home">
                 Home
               </Link>
-              {props.is_authenticated ? (
+              {is_authenticated ? (
                 <Link
                   className="nav-link active"
                   to="/"
-                  onClick={props.logoutHandler}
+                  onClick={logoutHandler}
                 >
                   <span className="navbar-text">Logged in </span>
                   Log Out
@@ -106,5 +111,12 @@ const Base = (props) => {
     </>
   );
 };
+
+interface BaseProps {
+  user: string;
+  getUserHandler: () => void;
+  is_authenticated: boolean;
+  logoutHandler: () => void;
+}
 
 export default Base;

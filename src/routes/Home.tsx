@@ -39,13 +39,13 @@ const Home = ({ posts }: HomeProps) => {
 
 type HomeProps = {
   posts: {
-    id: string;
+    id: number;
     title: string;
     content: string;
     category: string;
     creater: string;
     date: Date;
-    cover?: String;
+    cover?: string;
   }[];
 };
 

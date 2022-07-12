@@ -2,31 +2,35 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Figure from "react-bootstrap/Figure";
 
-const truncate = (input) => {
-  try {
-    return input.length > 300 ? `${input.substring(0, 100)}...` : input;
-  } catch (error) {
-    return { error };
-  }
+const truncate = (input: string) => {
+  return input.length > 300 ? `${input.substring(0, 100)}...` : input;
 };
 
-const Article = (props) => {
+const Article = ({
+  id,
+  posttitle,
+  postcontent,
+  postcategory,
+  postcreater,
+  postdate,
+  postimage,
+}: ArticleProps) => {
   return (
     <div id="test-article" className="col-md-4">
       <div className="card box-shadow d-flex flex-row p-0 align-items-center h-100">
         <div className=" card-body d-flex flex-column align-items-start m-0 h-100">
-          <p className="bi bi-tag">{props.postcategory}</p>
+          <p className="bi bi-tag">{postcategory}</p>
           <blockquote className="blockquote mb-0">
             <p className="fw-bold lead fs-4">
               <a href="{%url 'detail' post.id %}"></a>
-              {props.posttitle}
+              {posttitle}
             </p>
             <footer className="blockquote-footer">
-              {props.postdate} by {props.postcreater}
+              {postdate.toString()} by {postcreater}
             </footer>
-            <p className="lh-sm lead">{truncate(props.postcontent)}</p>
+            <p className="lh-sm lead">{truncate(postcontent)}</p>
           </blockquote>
-          <Link className="card-link" to={`post/${props.id}`} key={props.id}>
+          <Link className="card-link" to={`post/${id}`} key={id}>
             Read more...
           </Link>
         </div>
@@ -36,13 +40,22 @@ const Article = (props) => {
               width={200}
               height={250}
               alt="Thumbnail [200x250]"
-              src={props.postimage}
+              src={postimage}
             />
           </Figure>
         </div>
       </div>
     </div>
   );
+};
+type ArticleProps = {
+  id: number;
+  posttitle: string;
+  postcontent: string;
+  postcategory: string;
+  postcreater: string;
+  postdate: Date;
+  postimage?: string;
 };
 
 export default Article;
