@@ -2,3 +2,7 @@
 __pycache__
 env_lba
 uploads/media/
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
