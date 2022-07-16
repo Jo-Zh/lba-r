@@ -1,6 +1,6 @@
 import React, { Suspense, lazy } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-
+import { login_status } from "./context/user_context";
 import useAxios from "./utils/useAxios";
 
 const Base = lazy(() => import("./routes/Base"));
@@ -59,61 +59,65 @@ const App = () => {
   };
 
   return (
-    <Router>
-      <Suspense fallback={<div>Loading...</div>}>
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <Base
-                is_authenticated={logged_in}
-                logoutHandler={onLogoutHandler}
-                user={user_data ? user_data.username : "visitor"}
-                getUserHandler={onGetUser}
-              />
-            }
-          >
-            <Route path="home" element={<Home posts={posts} />}></Route>
+    <login_status.Provider value={logged_in}>
+      <Router>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Routes>
             <Route
-              path="home/post/:somevalue"
-              element={<Detail posts={posts} deletHandler={onDeleteHandler} />}
-            />
-            <Route
-              path="/addnewpost"
-              element={<Newpostform onSubmitnewPost={onAddnewpostform} />}
-            />
-
-            <Route
-              path="user/:username"
+              path="/"
               element={
-                <Userprofile
-                  posts={posts}
-                  deletHandler={onDeleteHandler}
-                  deletUserHandler={onDeleteUserHandler}
-                  user_data={user_data}
+                <Base
+                  // is_authenticated={logged_in}
+                  logoutHandler={onLogoutHandler}
+                  user={user_data ? user_data.username : "visitor"}
+                  getUserHandler={onGetUser}
                 />
               }
-            />
-            <Route
-              path="sign-up"
-              element={<Signupform onSubmitSignup={onAddUserform} />}
-            />
-            <Route
-              path="log-in"
-              element={<Loginform onSubmitLogin={onLoginform} />}
-            />
-            <Route
-              path="*"
-              element={
-                <main style={{ padding: "1rem" }}>
-                  <p>There's nothing here!</p>
-                </main>
-              }
-            />
-          </Route>
-        </Routes>
-      </Suspense>
-    </Router>
+            >
+              <Route path="home" element={<Home posts={posts} />}></Route>
+              <Route
+                path="home/post/:somevalue"
+                element={
+                  <Detail posts={posts} deletHandler={onDeleteHandler} />
+                }
+              />
+              <Route
+                path="/addnewpost"
+                element={<Newpostform onSubmitnewPost={onAddnewpostform} />}
+              />
+
+              <Route
+                path="user/:username"
+                element={
+                  <Userprofile
+                    posts={posts}
+                    deletHandler={onDeleteHandler}
+                    deletUserHandler={onDeleteUserHandler}
+                    user_data={user_data}
+                  />
+                }
+              />
+              <Route
+                path="sign-up"
+                element={<Signupform onSubmitSignup={onAddUserform} />}
+              />
+              <Route
+                path="log-in"
+                element={<Loginform onSubmitLogin={onLoginform} />}
+              />
+              <Route
+                path="*"
+                element={
+                  <main style={{ padding: "1rem" }}>
+                    <p>There's nothing here!</p>
+                  </main>
+                }
+              />
+            </Route>
+          </Routes>
+        </Suspense>
+      </Router>
+    </login_status.Provider>
   );
 };
 

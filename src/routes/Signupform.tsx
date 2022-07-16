@@ -5,6 +5,7 @@ import Button from "react-bootstrap/Button";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import { useNavigate } from "react-router-dom";
 import Dropdown from "react-bootstrap/Dropdown";
+import { NullLiteral } from "typescript";
 
 const Signupform = ({ onSubmitSignup }: SignupformProps) => {
   const [username, setUsername] = useState("");
@@ -12,10 +13,11 @@ const Signupform = ({ onSubmitSignup }: SignupformProps) => {
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
   // const [avatar, setAvatar] = useState(null);
+  const [passwordValidate, setPasswordValidate] = useState<boolean>(true);
   const [poster_or_reader, setPoster_or_reade] = useState("poster");
 
   const navigate = useNavigate();
-
+  // let passwordValidate: string = "";
   const formHandler = (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -35,7 +37,12 @@ const Signupform = ({ onSubmitSignup }: SignupformProps) => {
     setPassword("");
     setPassword2("");
 
-    navigate("/home", { replace: true });
+    if (password !== "") {
+      navigate("/home", { replace: true });
+      setPasswordValidate(true);
+    } else {
+      setPasswordValidate(false);
+    }
   };
 
   return (
@@ -72,11 +79,26 @@ const Signupform = ({ onSubmitSignup }: SignupformProps) => {
           type="password"
           placeholder="Password"
           // name="password"
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setPassword(e.target.value)
-          }
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            const regex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[A-Za-z\d]{6,10}$/;
+            if (regex.test(e.target.value)) {
+              console.log(passwordValidate);
+              // setPasswordValidate("Validated!");
+              return setPassword(e.target.value);
+            } else {
+              console.log(passwordValidate);
+              // setPasswordValidate("Invalide");
+              return setPassword("");
+            }
+          }}
         />
       </Form.Group>
+
+      <p className={!passwordValidate ? "text-danger" : "text-success"}>
+        Password (as least 1 digit, at least 1 uppercase letter, at least 1
+        lowercase letter, between 6-10 characters)
+      </p>
+
       <Form.Group className="mb-3" controlId="formBasicPassword">
         <Form.Label>Password repeat</Form.Label>
         <Form.Control
