@@ -7,25 +7,20 @@
 
 Similar app see: <a href="https://github.com/Jo-Zh/lba" >lba - (Djnago framework)</a>.
 
-## To run this project in developing:
+## Run at your local:
 
-In the project home directory, you can run:
+### Start Client
 
-### `npm install` `npm start`
+1. at the project root run `yarn` && `yarn start`, it will:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Run the app at your localhost: [http://localhost:3000](http://localhost:3000).
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Start Server
 
-### `cd backend-django`
-
-Create a python virtual env. to install all requirements (see requirements.txt).\
-Create a '/etc/secret_key.txt' file on your computer to store django secret-key.\
-Then run:
-
-### `python manage.py runserver`
+1. Navigate to folder `./backend-django`
+2. Create a python virtual env. with `python3 -m venv env_lba`
+3. Install all requirements `pip install -r requirements.txt`
+4. Start server with `python3 manage.py runserver`
 
 ## Functions available:
 

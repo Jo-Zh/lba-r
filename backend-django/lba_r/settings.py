@@ -20,12 +20,11 @@ MEDIA_URL=('uploads/')
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY=os.environ.get('SECRET_KEY') 
 
-with open('/etc/secret_key.txt') as f:
-    SECRET_KEY = f.read().strip()
-# SECURITY WARNING: don't run with debug turned on in production!
+from django.core.management.utils import get_random_secret_key  
+
+SECRET_KEY = get_random_secret_key()
+
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
@@ -58,7 +57,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 CORS_ORIGIN_ALLOW_ALL = True
-# CORS_ORIGIN_WHITELIST=['localhost:3000']
 
 ROOT_URLCONF = 'lba_r.urls'
 
